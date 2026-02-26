@@ -1,7 +1,7 @@
 "use client";
 
-import type { ComponentType, SVGProps } from "react";
 import { CopySlash, Eraser, FilePenLine, FileUp, PenLine } from "lucide-react";
+import type { ComponentType, SVGProps } from "react";
 import { twMerge } from "tailwind-merge";
 
 import {

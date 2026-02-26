@@ -18,7 +18,10 @@ import {
 
 type CosmicComboboxRootProps = React.ComponentProps<typeof CosmicComboboxRoot>;
 
-type ComboboxProps = Omit<CosmicComboboxRootProps, "children" | "collection"> & {
+type ComboboxProps = Omit<
+	CosmicComboboxRootProps,
+	"children" | "collection"
+> & {
 	items: string[];
 	placeholder?: string;
 };
@@ -70,16 +73,16 @@ function Combobox({
 }
 
 export {
-	ComboboxRoot,
+	ComboboxContent,
 	ComboboxControl,
 	ComboboxInput,
-	ComboboxTrigger,
-	ComboboxPositioner,
-	ComboboxContent,
-	ComboboxItemGrouo,
 	ComboboxItem,
-	ComboboxItemText,
+	ComboboxItemGrouo,
 	ComboboxItemIndicator,
+	ComboboxItemText,
+	ComboboxPositioner,
+	ComboboxRoot,
+	ComboboxTrigger,
 } from "@/components/cosmic/combobox";
 
 export { Combobox, type ComboboxProps };

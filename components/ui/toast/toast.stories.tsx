@@ -6,9 +6,9 @@ import {
 	createToaster,
 	ToastCloseTrigger,
 	ToastDescription,
+	Toaster,
 	ToastRoot,
 	ToastTitle,
-	Toaster,
 } from "./toast";
 
 const toaster = createToaster({

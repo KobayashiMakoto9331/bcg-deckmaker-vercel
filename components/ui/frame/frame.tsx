@@ -1,5 +1,5 @@
-import { twMerge } from "tailwind-merge";
 import type { Paths } from "@left4code/svg-renderer";
+import { twMerge } from "tailwind-merge";
 
 import { Frame as CosmicFrame } from "../../cosmic/frame";
 

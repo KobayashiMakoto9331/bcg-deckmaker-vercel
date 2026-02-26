@@ -1,9 +1,9 @@
-import { Button } from "./button";
-import { X } from "lucide-react";
-import { Frame } from "./frame";
-import { twMerge } from "tailwind-merge";
-import { Toast, Toaster, createToaster } from "@ark-ui/react/toast";
 import { Portal } from "@ark-ui/react/portal";
+import { createToaster, Toast, Toaster } from "@ark-ui/react/toast";
+import { X } from "lucide-react";
+import { twMerge } from "tailwind-merge";
+import { Button } from "./button";
+import { Frame } from "./frame";
 
 function ToasterRoot({
 	toaster,

@@ -1,5 +1,5 @@
 import ChartJs from "chart.js/auto";
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 function getColor(name: string, opacity = 1) {
 	const color = getComputedStyle(document.documentElement)
@@ -22,7 +22,7 @@ function Chart({
 }) {
 	const chartRef = useRef<
 		HTMLCanvasElement & {
-			instance?: {};
+			instance?: unknown;
 		}
 	>(null);
 
@@ -30,7 +30,7 @@ function Chart({
 		if (chartRef.current && !chartRef.current.instance) {
 			chartRef.current.instance = new ChartJs(chartRef.current, config);
 		}
-	}, []);
+	}, [config]);
 
 	return <canvas className={className} ref={chartRef} {...props} />;
 }

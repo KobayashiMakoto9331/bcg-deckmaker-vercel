@@ -1,5 +1,5 @@
-import { Frame } from "./frame";
 import { twMerge } from "tailwind-merge";
+import { Frame } from "./frame";
 
 function Input({
 	className,

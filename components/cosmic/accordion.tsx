@@ -1,7 +1,7 @@
+import { Accordion } from "@ark-ui/react/accordion";
+import { ChevronDown, FilePenLine } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { Frame } from "./frame";
-import { ChevronDown, FilePenLine } from "lucide-react";
-import { Accordion } from "@ark-ui/react/accordion";
 
 function AccordionRoot({
 	children,

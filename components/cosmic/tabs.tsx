@@ -1,7 +1,7 @@
+import { Tabs } from "@ark-ui/react/tabs";
 import { twMerge } from "tailwind-merge";
 import { Button } from "./button";
 import { Frame } from "./frame";
-import { Tabs } from "@ark-ui/react/tabs";
 
 function TabsRoot({
 	children,

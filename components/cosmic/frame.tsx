@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import { twMerge } from "tailwind-merge";
 import { type Paths, setupSvgRenderer } from "@left4code/svg-renderer";
+import { useEffect, useRef } from "react";
+import { twMerge } from "tailwind-merge";
 
 function Frame({
 	className,

@@ -1,6 +1,6 @@
-import { Frame } from "./frame";
-import { twMerge } from "tailwind-merge";
 import { Switch } from "@ark-ui/react/switch";
+import { twMerge } from "tailwind-merge";
+import { Frame } from "./frame";
 
 function SwitchRoot({
 	className,

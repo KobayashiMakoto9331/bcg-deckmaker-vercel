@@ -1,10 +1,10 @@
+import { Combobox } from "@ark-ui/react/combobox";
+import { Portal } from "@ark-ui/react/portal";
+import { Check, ChevronsUpDown, Search } from "lucide-react";
+import { createContext, useContext } from "react";
 import { twMerge } from "tailwind-merge";
 import { Button } from "./button";
 import { Frame } from "./frame";
-import { Combobox } from "@ark-ui/react/combobox";
-import { Portal } from "@ark-ui/react/portal";
-import { ChevronsUpDown, Search, Check } from "lucide-react";
-import { createContext, useContext } from "react";
 
 const ValueContext = createContext<string[] | undefined>(undefined);
 
@@ -44,7 +44,7 @@ function ComboboxTrigger({
 	return (
 		<Combobox.Trigger asChild {...rest}>
 			<Button className="w-full min-w-55 px-0 [&>span]:justify-start px-8">
-				{value && value[0].length ? value : "Select option..."}{" "}
+				{value?.[0].length ? value : "Select option..."}{" "}
 				<ChevronsUpDown className="size-4 ms-auto opacity-70" />
 			</Button>
 		</Combobox.Trigger>

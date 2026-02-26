@@ -1,9 +1,9 @@
+import { Presence, type PresenceProps } from "@ark-ui/react/presence";
+import { X } from "lucide-react";
+import { createContext, useContext, useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { Button } from "./button";
 import { Frame } from "./frame";
-import { X } from "lucide-react";
-import { twMerge } from "tailwind-merge";
-import { useState, useContext, createContext } from "react";
-import { Presence, type PresenceProps } from "@ark-ui/react/presence";
 
 const PresentContext = createContext<{
 	present: boolean;

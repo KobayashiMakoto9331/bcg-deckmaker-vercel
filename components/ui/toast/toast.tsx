@@ -2,9 +2,9 @@
 
 export {
 	createToaster,
+	ToastCloseTrigger,
+	ToastDescription,
 	Toaster,
 	ToastRoot,
 	ToastTitle,
-	ToastDescription,
-	ToastCloseTrigger,
 } from "@/components/cosmic/toast";

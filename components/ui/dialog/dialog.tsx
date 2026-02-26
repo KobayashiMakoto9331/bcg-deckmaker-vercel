@@ -1,13 +1,13 @@
 "use client";
 
 export {
-	DialogRoot,
-	DialogTrigger,
 	DialogBackdrop,
-	DialogPositioner,
-	DialogContent,
-	DialogTitle,
-	DialogDescription,
 	DialogCloseTrigger,
+	DialogContent,
+	DialogDescription,
+	DialogPositioner,
+	DialogRoot,
+	DialogTitle,
+	DialogTrigger,
 	Portal,
 } from "@/components/cosmic/dialog";

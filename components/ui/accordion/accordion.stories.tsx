@@ -32,11 +32,15 @@ export const Default: Story = {
 		<AccordionRoot defaultValue={["item-1"]}>
 			<AccordionItem value="item-1">
 				<AccordionTrigger>Deck Options</AccordionTrigger>
-				<AccordionContent>Elemental reactions and burst cards.</AccordionContent>
+				<AccordionContent>
+					Elemental reactions and burst cards.
+				</AccordionContent>
 			</AccordionItem>
 			<AccordionItem value="item-2">
 				<AccordionTrigger>Export Settings</AccordionTrigger>
-				<AccordionContent>Export as image bundle and JSON deck list.</AccordionContent>
+				<AccordionContent>
+					Export as image bundle and JSON deck list.
+				</AccordionContent>
 			</AccordionItem>
 		</AccordionRoot>
 	),

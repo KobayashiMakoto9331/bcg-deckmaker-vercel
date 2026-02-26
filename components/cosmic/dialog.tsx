@@ -1,9 +1,9 @@
-import { twMerge } from "tailwind-merge";
-import { Frame } from "./frame";
-import { Button } from "./button";
-import { X } from "lucide-react";
 import { Dialog } from "@ark-ui/react/dialog";
 import { Portal } from "@ark-ui/react/portal";
+import { X } from "lucide-react";
+import { twMerge } from "tailwind-merge";
+import { Button } from "./button";
+import { Frame } from "./frame";
 
 function DialogRoot({
 	children,

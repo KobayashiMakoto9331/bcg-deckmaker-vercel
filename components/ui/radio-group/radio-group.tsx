@@ -1,10 +1,10 @@
 "use client";
 
 export {
-	RadioGroupRoot,
-	RadioGroupLabel,
 	RadioGroupItem,
-	RadioItemText,
-	RadioItemHiddenInput,
+	RadioGroupLabel,
+	RadioGroupRoot,
 	RadioItemControl,
+	RadioItemHiddenInput,
+	RadioItemText,
 } from "@/components/cosmic/radio-group";

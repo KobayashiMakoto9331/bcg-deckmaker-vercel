@@ -1,6 +1,6 @@
+import { RadioGroup } from "@ark-ui/react/radio-group";
 import { twMerge } from "tailwind-merge";
 import { Frame } from "./frame";
-import { RadioGroup } from "@ark-ui/react/radio-group";
 
 function RadioGroupRoot({
 	children,

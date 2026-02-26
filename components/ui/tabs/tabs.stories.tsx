@@ -30,8 +30,12 @@ export const Default: Story = {
 				<TabsTrigger value="cards">Cards</TabsTrigger>
 				<TabsTrigger value="stats">Stats</TabsTrigger>
 			</TabsList>
-			<TabsContent value="overview">General deck overview and key combos.</TabsContent>
-			<TabsContent value="cards">Card list and rarity distribution.</TabsContent>
+			<TabsContent value="overview">
+				General deck overview and key combos.
+			</TabsContent>
+			<TabsContent value="cards">
+				Card list and rarity distribution.
+			</TabsContent>
 			<TabsContent value="stats">Damage curves and usage metrics.</TabsContent>
 		</TabsRoot>
 	),

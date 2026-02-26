@@ -1,8 +1,8 @@
 "use client";
 
 export {
-	AccordionRoot,
-	AccordionItem,
-	AccordionTrigger,
 	AccordionContent,
+	AccordionItem,
+	AccordionRoot,
+	AccordionTrigger,
 } from "@/components/cosmic/accordion";

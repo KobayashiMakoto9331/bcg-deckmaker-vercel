@@ -1,9 +1,9 @@
 "use client";
 
 export {
-	SwitchRoot,
-	SwitchHiddenInput,
 	SwitchControl,
-	SwitchThumb,
+	SwitchHiddenInput,
 	SwitchLabel,
+	SwitchRoot,
+	SwitchThumb,
 } from "@/components/cosmic/switch";

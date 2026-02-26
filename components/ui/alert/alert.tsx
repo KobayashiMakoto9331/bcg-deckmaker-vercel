@@ -1,8 +1,8 @@
 "use client";
 
 export {
+	AlertCloseTrigger,
+	AlertDescription,
 	AlertRoot,
 	AlertTitle,
-	AlertDescription,
-	AlertCloseTrigger,
 } from "@/components/cosmic/alert";

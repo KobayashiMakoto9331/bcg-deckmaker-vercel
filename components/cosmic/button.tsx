@@ -1,6 +1,6 @@
-import { Frame } from "./frame";
-import { twMerge } from "tailwind-merge";
 import { cva, type VariantProps } from "class-variance-authority";
+import { twMerge } from "tailwind-merge";
+import { Frame } from "./frame";
 
 const buttonVariants = cva(
 	[
