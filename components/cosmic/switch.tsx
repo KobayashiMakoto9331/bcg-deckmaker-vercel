@@ -29,7 +29,7 @@ function SwitchControl({
 	return (
 		<Switch.Control
 			className={twMerge([
-				"group relative w-14 h-6 flex items-center p-1 cursor-pointer",
+				"group relative isolate flex h-6 w-14 cursor-pointer items-center p-1",
 				"[--color-frame-1-stroke:var(--color-primary)]/70",
 				"[--color-frame-1-fill:var(--color-primary)]/10",
 				"data-[state=checked]:[--color-frame-1-stroke:var(--color-primary)]",
@@ -38,7 +38,7 @@ function SwitchControl({
 			])}
 			{...rest}
 		>
-			<div className="absolute inset-0 z-[-1]">
+			<div className="pointer-events-none absolute inset-0 z-0">
 				<Frame
 					paths={JSON.parse(
 						'[{"show":true,"style":{"strokeWidth":"1","stroke":"var(--color-frame-1-stroke)","fill":"var(--color-frame-1-fill)"},"path":[["M","11","0"],["L","100% + 0","0"],["L","100% + 0","100% + 0"],["L","0","100% + 0"],["L","0","0% + 12"],["L","11","0"]]}]',
@@ -57,7 +57,7 @@ function SwitchThumb({
 	return (
 		<Switch.Thumb
 			className={twMerge([
-				"relative w-1/2 h-3.5 z-[-1] -mb-px transition-all ms-0.5",
+				"relative z-10 -mb-px ms-0.5 h-3.5 w-1/2 transition-all",
 				"[--color-frame-1-stroke:var(--color-primary)]/80",
 				"[--color-frame-1-fill:var(--color-primary)]/20",
 				"group-data-[state=checked]:[--color-frame-1-stroke:var(--color-primary)]",

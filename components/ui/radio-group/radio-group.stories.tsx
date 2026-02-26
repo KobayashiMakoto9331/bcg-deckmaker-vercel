@@ -1,13 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-import {
-	RadioGroupItem,
-	RadioGroupLabel,
-	RadioGroupRoot,
-	RadioItemControl,
-	RadioItemHiddenInput,
-	RadioItemText,
-} from "./radio-group";
+import { RadioGroup } from "./radio-group";
 
 const options = [
 	{ value: "standard", label: "Standard" },
@@ -17,7 +10,7 @@ const options = [
 
 const meta = {
 	title: "UI/Radio Group",
-	component: RadioGroupRoot,
+	component: RadioGroup,
 	parameters: {
 		layout: "centered",
 	},
@@ -29,24 +22,15 @@ const meta = {
 			</div>
 		),
 	],
-} satisfies Meta<typeof RadioGroupRoot>;
+} satisfies Meta<typeof RadioGroup>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	args: {},
-	render: () => (
-		<RadioGroupRoot defaultValue="standard">
-			<RadioGroupLabel>Play Style</RadioGroupLabel>
-			{options.map((option) => (
-				<RadioGroupItem key={option.value} value={option.value}>
-					<RadioItemText>{option.label}</RadioItemText>
-					<RadioItemControl>
-						<RadioItemHiddenInput />
-					</RadioItemControl>
-				</RadioGroupItem>
-			))}
-		</RadioGroupRoot>
-	),
+	args: {
+		label: "Play Style",
+		options,
+		defaultValue: "standard",
+	},
 };
