@@ -62,9 +62,10 @@ const DeckDetailModal = ({
 										key={card.id}
 										className="feature-card flex items-center gap-4 p-2 rounded"
 									>
-										<div
+										<button
+											type="button"
 											onClick={() => setPreviewCard(card)}
-											className="w-[50px] h-[50px] cursor-pointer relative flex-shrink-0"
+											className="w-[50px] h-[50px] cursor-pointer relative shrink-0"
 										>
 											<Image
 												src={card.image}
@@ -73,7 +74,7 @@ const DeckDetailModal = ({
 												height={50}
 												className="object-contain"
 											/>
-										</div>
+										</button>
 										<div className="flex-1 min-w-0 text-left">
 											<div className="font-bold overflow-hidden text-ellipsis whitespace-nowrap">
 												{card.name}
@@ -83,19 +84,19 @@ const DeckDetailModal = ({
 										{readOnly ? (
 											<span className="font-bold text-lg">x{card.count}</span>
 										) : (
-											<div className="flex items-center gap-1">
+											<div className="flex items-center gap-1.5">
 												<Button
 													onClick={() => onRemove(card.id)}
-													className="w-6! h-6! p-0!"
+													className="w-8! h-8! p-0!"
 												>
 													-
 												</Button>
-												<span className="font-bold w-5 text-center">
+												<span className="font-bold w-6 text-center">
 													{card.count}
 												</span>
 												<Button
 													onClick={() => onAdd(card)}
-													className="w-6! h-6! p-0!"
+													className="w-8! h-8! p-0!"
 												>
 													+
 												</Button>

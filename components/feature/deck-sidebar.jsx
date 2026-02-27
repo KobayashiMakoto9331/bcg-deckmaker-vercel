@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button/button";
 import CardPreviewModal from "./card-preview-modal";
@@ -118,12 +119,16 @@ const DeckSidebar = ({
 								<button
 									type="button"
 									onClick={() => setPreviewCard(card)}
-								className="size-[30px] cursor-pointer rounded-full bg-black bg-cover bg-position-[top_center] bg-no-repeat"
-									style={{
-										backgroundImage: `url(${card.image})`,
-										backgroundSize: "150%",
-									}}
-								/>
+									className="relative size-[30px] shrink-0 cursor-pointer overflow-hidden rounded-full bg-black"
+								>
+									<Image
+										src={card.image}
+										alt={card.name}
+										width={45}
+										height={45}
+										className="absolute inset-0 h-full w-full scale-150 object-cover object-[center_top]"
+									/>
+								</button>
 								<div className="overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm">
 									{card.name}
 								</div>
