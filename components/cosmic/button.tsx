@@ -29,10 +29,47 @@ const buttonVariants = cva(
 				"tab-center": "",
 				"tab-right": "",
 			},
+			selected: {
+				true: "",
+				false: "",
+			},
 		},
+		compoundVariants: [
+			{
+				variant: "default",
+				selected: true,
+				className:
+					"[--color-frame-1-fill:var(--color-primary)]/70 [&:hover_svg]:drop-shadow-2xl",
+			},
+			{
+				variant: "accent",
+				selected: true,
+				className:
+					"[--color-frame-1-fill:var(--color-accent)]/80 [&:hover_svg]:drop-shadow-2xl",
+			},
+			{
+				variant: "destructive",
+				selected: true,
+				className:
+					"[--color-frame-1-fill:var(--color-destructive)]/70 [&:hover_svg]:drop-shadow-2xl",
+			},
+			{
+				variant: "secondary",
+				selected: true,
+				className:
+					"[--color-frame-1-fill:var(--color-secondary)]/60 [&:hover_svg]:drop-shadow-2xl",
+			},
+			{
+				variant: "success",
+				selected: true,
+				className:
+					"[--color-frame-1-fill:var(--color-success)]/70 [&:hover_svg]:drop-shadow-2xl",
+			},
+		],
 		defaultVariants: {
 			variant: "default",
 			shape: "default",
+			selected: false,
 		},
 	},
 );
@@ -45,6 +82,7 @@ function Button({
 	customPaths,
 	enableBackdropBlur,
 	enableViewBox,
+	selected = false,
 	...props
 }: React.ComponentProps<"button"> &
 	VariantProps<typeof buttonVariants> & {
@@ -55,7 +93,9 @@ function Button({
 	return (
 		<button
 			{...props}
-			className={twMerge(buttonVariants({ variant, shape, className }))}
+			className={twMerge(
+				buttonVariants({ variant, shape, selected, className }),
+			)}
 		>
 			<div className="absolute inset-0 -mb-2">
 				{!customPaths && (shape === "default" || shape === "flat") && (

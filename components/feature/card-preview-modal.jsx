@@ -47,7 +47,7 @@ const CardPreviewModal = ({ card, open, onOpenChange }) => {
 									onClick={() => setShowDetails(false)}
 									className="absolute right-2 top-2 px-4 py-1.5"
 								>
-									BACK
+									Back
 								</Button>
 								<div className="relative mb-4 border-b border-primary/30 pb-2">
 									<div className="text-2xl font-bold text-shadow-lg text-shadow-primary text-white">

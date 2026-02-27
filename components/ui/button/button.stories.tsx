@@ -62,3 +62,33 @@ export const AllVariants: Story = {
 		shape: "default",
 	},
 };
+
+export const Selected: Story = {
+	render: (args) => (
+		<div className="flex flex-col gap-8">
+			<div className="flex flex-col gap-3">
+				<h3 className="text-white text-sm font-semibold mb-2">Default State</h3>
+				<div className="grid gap-3 sm:grid-cols-2">
+					{variants.map((variant) => (
+						<Button key={variant} {...args} variant={variant} selected={false}>
+							{variant}
+						</Button>
+					))}
+				</div>
+			</div>
+			<div className="flex flex-col gap-3">
+				<h3 className="text-white text-sm font-semibold mb-2">Selected State</h3>
+				<div className="grid gap-3 sm:grid-cols-2">
+					{variants.map((variant) => (
+						<Button key={variant} {...args} variant={variant} selected={true}>
+							{variant}
+						</Button>
+					))}
+				</div>
+			</div>
+		</div>
+	),
+	args: {
+		shape: "default",
+	},
+};

@@ -106,10 +106,7 @@ const CardGrid = ({
 				{filteredCards.map((card) => {
 					const count = deck[card.id] || 0;
 					return (
-						<div
-							key={card.id}
-							className="card-container relative rounded-lg border border-[rgba(255,255,255,0.2)] bg-[linear-gradient(180deg,rgba(25,43,70,0.72)_0%,rgba(15,27,47,0.82)_100%)] p-1.5"
-						>
+						<div key={card.id}>
 							<div
 								className={`mb-1 flex justify-center ${gridCols === 8 ? "gap-0" : "gap-0.5"}`}
 							>
@@ -120,9 +117,10 @@ const CardGrid = ({
 											e.stopPropagation();
 											onSetCount(card, num);
 										}}
+										selected={count === num}
 										className={`min-w-0 max-w-10 flex-1 px-0! ${
 											gridCols === 8 ? "py-0!" : "py-0.5!"
-										} ${count === num ? "bg-[#646cff]!" : "bg-[#333]!"}`}
+										}`}
 									>
 										{num}
 									</Button>

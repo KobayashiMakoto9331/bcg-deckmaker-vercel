@@ -89,39 +89,21 @@ const DeckSidebar = ({
 	const [previewCard, setPreviewCard] = useState(null);
 
 	return (
-		<div
-			className="feature-panel"
-			style={{
-				width: "300px",
-				borderLeft: "1px solid rgba(123, 190, 255, 0.2)",
-				display: "flex",
-				flexDirection: "column",
-				height: "100%",
-				zIndex: 100,
-			}}
-		>
-			<div style={{ padding: "1rem", borderBottom: "1px solid #333" }}>
-				<div style={{ fontSize: "0.9em", color: "#aaa", marginTop: "0.5rem" }}>
+		<div className="feature-panel z-100 flex h-full w-[300px] flex-col border-l border-primary/20">
+			<div className="border-b border-[#333] p-4">
+				<div className="mt-2 text-sm text-[#aaa]">
 					Total: {totalCards} cards
 				</div>
-				<Button
-					onClick={onClear}
-					style={{ marginTop: "0.5rem", width: "100%" }}
-				>
+				<Button onClick={onClear} className="mt-2 w-full">
 					Clear Deck
 				</Button>
-				<Button
-					onClick={onOpenDetails}
-					style={{ marginTop: "0.5rem", width: "100%" }}
-				>
+				<Button onClick={onOpenDetails} className="mt-2 w-full">
 					View Details
 				</Button>
 			</div>
-			<div style={{ flex: 1, overflowY: "auto", padding: "1rem" }}>
+			<div className="flex-1 overflow-y-auto p-4">
 				{deckList.length === 0 ? (
-					<div
-						style={{ color: "#666", textAlign: "center", marginTop: "2rem" }}
-					>
+					<div className="mt-8 text-center text-[#666]">
 						{Object.keys(deck || {}).length > 0
 							? "デッキにカードが含まれていますが、カードデータが見つかりません。"
 							: "デッキにカードが入っていません。"}
@@ -129,69 +111,29 @@ const DeckSidebar = ({
 				) : (
 					deckList.map((card) => (
 						<div
-							className="feature-card"
+							className="feature-card mb-2 flex items-center justify-between rounded p-2"
 							key={card.id}
-							style={{
-								display: "flex",
-								justifyContent: "space-between",
-								alignItems: "center",
-								marginBottom: "0.5rem",
-								padding: "0.5rem",
-								borderRadius: "4px",
-							}}
 						>
-							<div
-								style={{
-									display: "flex",
-									alignItems: "center",
-									gap: "8px",
-									overflow: "hidden",
-								}}
-							>
-								<div
+							<div className="flex items-center gap-2 overflow-hidden">
+								<button
+									type="button"
 									onClick={() => setPreviewCard(card)}
+								className="size-[30px] cursor-pointer rounded-full bg-black bg-cover bg-position-[top_center] bg-no-repeat"
 									style={{
-										width: "30px",
-										height: "30px",
-										borderRadius: "50%",
-										backgroundSize: "150%",
-										backgroundPosition: "top center",
 										backgroundImage: `url(${card.image})`,
-										backgroundColor: "black",
-										cursor: "pointer",
+										backgroundSize: "150%",
 									}}
 								/>
-								<div
-									style={{
-										overflow: "hidden",
-										textOverflow: "ellipsis",
-										whiteSpace: "nowrap",
-										fontSize: "0.9em",
-										textAlign: "left",
-									}}
-								>
+								<div className="overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm">
 									{card.name}
 								</div>
 							</div>
-							<div
-								style={{
-									display: "flex",
-									alignItems: "center",
-									gap: "8px",
-									flexShrink: 0,
-								}}
-							>
-								<span style={{ fontWeight: "bold" }}>x{card.count}</span>
-								<Button
-									onClick={() => onRemove(card.id)}
-									style={{ width: "24px", padding: 0 }}
-								>
+							<div className="flex shrink-0 items-center gap-1">
+								<span className="font-bold pr-1">x{card.count}</span>
+								<Button onClick={() => onRemove(card.id)} className="w-9 p-0">
 									-
 								</Button>
-								<Button
-									onClick={() => onAdd(card)}
-									style={{ width: "24px", padding: 0 }}
-								>
+								<Button onClick={() => onAdd(card)} className="w-9 p-0">
 									+
 								</Button>
 							</div>
@@ -202,7 +144,10 @@ const DeckSidebar = ({
 			{previewCard && (
 				<CardPreviewModal
 					card={previewCard}
-					onClose={() => setPreviewCard(null)}
+					open={!!previewCard}
+					onOpenChange={(details) => {
+						if (!details.open) setPreviewCard(null);
+					}}
 				/>
 			)}
 		</div>
