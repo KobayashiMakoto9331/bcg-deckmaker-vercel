@@ -1,0 +1,32 @@
+---
+description: Frontend styling policy for feature migration
+alwaysApply: true
+---
+
+# Frontend Styling Policy
+
+## Purpose
+- Keep migration work aligned with existing UX and component architecture.
+
+## Rules
+- Use Tailwind classes as the default styling method for `components/feature`.
+- Avoid inline `style` unless values must be dynamic at runtime (e.g. per-item computed color/size/position).
+- Do not add global CSS that changes visuals of `components/ui`. If global styles are needed, scope them to feature-specific wrappers (e.g. `.feature-root`).
+- Preserve the visual contract of shared UI primitives in `components/ui` (especially `Button` and `Input`).
+- Use project color tokens consistently:
+  - `--color-primary: rgb(20, 160, 230)`
+  - `--color-primary-foreground: rgb(255, 255, 255)`
+  - `--color-accent: rgb(202, 65, 34)`
+  - `--color-accent-foreground: rgb(255, 255, 255)`
+  - `--color-secondary: --alpha(color-mix(in oklab, var(--color-primary), var(--color-white) 50%) / 60%)`
+  - `--color-secondary-foreground: color-mix(in oklab, var(--color-primary), var(--color-white) 70%)`
+  - `--color-destructive: var(--color-rose-500)`
+  - `--color-destructive-foreground: rgb(255, 255, 255)`
+  - `--color-success: var(--color-teal-500)`
+  - `--color-success-foreground: rgb(255, 255, 255)`
+  - `--color-background: color-mix(in oklab, var(--color-primary), var(--color-black) 80%)`
+  - `--color-foreground: var(--color-white)`
+
+## Practical Checks
+- When refactoring UI in `components/feature`, prefer replacing inline style blocks with Tailwind utility classes.
+- If a visual issue appears in shared UI, first inspect global selectors and CSS variable availability before editing `components/ui`.

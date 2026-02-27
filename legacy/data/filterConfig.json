@@ -1,0 +1,22 @@
+{
+	"abilities": [
+		{ "label": "リペア", "query": "《リペア" },
+		{ "label": "突破", "query": "《突破" },
+		{ "label": "制圧", "query": "《制圧" },
+		{ "label": "高機動", "query": "《高機動" },
+		{ "label": "先制攻撃", "query": "《先制攻撃" },
+		{ "label": "バースト", "query": "【バースト】" },
+		{ "label": "ブロッカー", "query": "《ブロッカー》" }
+	],
+	"setFilter": {
+		"includeKeywords": ["[ST", "[GD"],
+		"excludeKeywords": ["ボーナスパック", "イベント", "リンクユニット"]
+	},
+	"foilFilter": {
+		"excludeKeywords": ["ボーナスパック"]
+	},
+	"deckConstruction": {
+		"restrictedNames": ["リソース", "EXベース", "EXリソース"],
+		"restrictedTypes": ["UNIT TOKEN"]
+	}
+}

@@ -1,0 +1,8 @@
+[
+	{ "id": "public", "name": "Public", "isReadOnly": true },
+	{ "id": "780a23a7-1824-45c3-8cf3-338730047fb8", "name": "HIDEMICHI" },
+	{ "id": "180b896d-c6b4-4e0a-a32c-a37b62283a78", "name": "io" },
+	{ "id": "6194e7b7-8b64-4bf1-9446-5b2a16b50997", "name": "axon" },
+	{ "id": "429693a7-87a0-4987-9b97-d06a53436401", "name": "kobax" },
+	{ "id": "250ceb86-49ef-4e2d-9361-27a641269fce", "name": "arugo" }
+]

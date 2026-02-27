@@ -1,5 +1,5 @@
-import { Frame } from "@/components/ui/frame/frame";
+import { ClientOnly } from "./client";
 
 export default function Home() {
-	return <Frame />;
+	return <ClientOnly />;
 }

@@ -10,6 +10,7 @@ function Button({ className, ...props }: ButtonProps) {
 	return (
 		<CosmicButton
 			className={twMerge(["[&>span]:tracking-wide", className])}
+			shape="flat"
 			{...props}
 		/>
 	);

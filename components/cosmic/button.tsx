@@ -4,22 +4,22 @@ import { Frame } from "./frame";
 
 const buttonVariants = cva(
 	[
-		"group font-bold mb-2 relative px-8 py-2 cursor-pointer transition-all [&:hover_svg]:drop-shadow-xl outline-none",
-		"[&>span]:relative [&>span]:flex [&>span]:items-center [&>span]:justify-center [&>span]:group-hover:text-shadow-lg",
+		"group font-bold mb-2 relative px-8 py-2 cursor-pointer outline-none transition-all duration-200 ease-out [&:hover_svg]:drop-shadow-xl",
+		"[&>span]:relative [&>span]:flex [&>span]:items-center [&>span]:justify-center [&>span]:transition-all [&>span]:duration-200",
 	],
 	{
 		variants: {
 			variant: {
 				default:
-					"[--color-frame-1-stroke:var(--color-primary)] [--color-frame-1-fill:var(--color-primary)]/22 [--color-frame-2-stroke:var(--color-primary)] [--color-frame-2-fill:var(--color-primary)]/10 text-primary-foreground [&:hover_svg]:drop-shadow-primary/50 [&>span]:group-hover:text-shadow-primary/50",
+					"[--color-frame-1-stroke:var(--color-primary)] [--color-frame-1-fill:var(--color-primary)]/22 [--color-frame-2-stroke:var(--color-primary)] [--color-frame-2-fill:var(--color-primary)]/10 hover:[--color-frame-1-fill:var(--color-primary)]/34 hover:[--color-frame-2-fill:var(--color-primary)]/16 text-primary-foreground [&:hover_svg]:drop-shadow-primary/60 [&>span]:group-hover:[text-shadow:0_0_12px_var(--color-primary)]",
 				accent:
-					"[--color-frame-1-stroke:var(--color-accent)] [--color-frame-1-fill:var(--color-accent)]/40 [--color-frame-2-stroke:var(--color-accent)] [--color-frame-2-fill:var(--color-accent)]/20 text-accent-foreground [&:hover_svg]:drop-shadow-accent/50 [&>span]:group-hover:text-shadow-accent/50",
+					"[--color-frame-1-stroke:var(--color-accent)] [--color-frame-1-fill:var(--color-accent)]/40 [--color-frame-2-stroke:var(--color-accent)] [--color-frame-2-fill:var(--color-accent)]/20 hover:[--color-frame-1-fill:var(--color-accent)]/54 hover:[--color-frame-2-fill:var(--color-accent)]/28 text-accent-foreground [&:hover_svg]:drop-shadow-accent/60 [&>span]:group-hover:[text-shadow:0_0_12px_var(--color-accent)]",
 				destructive:
-					"[--color-frame-1-stroke:var(--color-destructive)] [--color-frame-1-fill:var(--color-destructive)]/22 [--color-frame-2-stroke:var(--color-destructive)] [--color-frame-2-fill:var(--color-destructive)]/10 text-destructive-foreground [&:hover_svg]:drop-shadow-destructive/50 [&>span]:group-hover:text-shadow-destructive/50",
+					"[--color-frame-1-stroke:var(--color-destructive)] [--color-frame-1-fill:var(--color-destructive)]/22 [--color-frame-2-stroke:var(--color-destructive)] [--color-frame-2-fill:var(--color-destructive)]/10 hover:[--color-frame-1-fill:var(--color-destructive)]/34 hover:[--color-frame-2-fill:var(--color-destructive)]/16 text-destructive-foreground [&:hover_svg]:drop-shadow-destructive/60 [&>span]:group-hover:[text-shadow:0_0_12px_var(--color-destructive)]",
 				secondary:
-					"[--color-frame-1-stroke:var(--color-secondary)] [--color-frame-1-fill:var(--color-secondary)]/15 [--color-frame-2-stroke:var(--color-secondary)] [--color-frame-2-fill:var(--color-secondary)]/10 text-secondary-foreground [&:hover_svg]:drop-shadow-secondary/50 [&>span]:group-hover:text-shadow-secondary/50",
+					"[--color-frame-1-stroke:var(--color-secondary)] [--color-frame-1-fill:var(--color-secondary)]/15 [--color-frame-2-stroke:var(--color-secondary)] [--color-frame-2-fill:var(--color-secondary)]/10 hover:[--color-frame-1-fill:var(--color-secondary)]/30 hover:[--color-frame-2-fill:var(--color-secondary)]/16 text-secondary-foreground [&:hover_svg]:drop-shadow-secondary/60 [&>span]:group-hover:[text-shadow:0_0_12px_var(--color-secondary)]",
 				success:
-					"[--color-frame-1-stroke:var(--color-success)] [--color-frame-1-fill:var(--color-success)]/22 [--color-frame-2-stroke:var(--color-success)] [--color-frame-2-fill:var(--color-success)]/10 text-success-foreground [&:hover_svg]:drop-shadow-success/50 [&>span]:group-hover:text-shadow-success/50",
+					"[--color-frame-1-stroke:var(--color-success)] [--color-frame-1-fill:var(--color-success)]/22 [--color-frame-2-stroke:var(--color-success)] [--color-frame-2-fill:var(--color-success)]/10 hover:[--color-frame-1-fill:var(--color-success)]/34 hover:[--color-frame-2-fill:var(--color-success)]/16 text-success-foreground [&:hover_svg]:drop-shadow-success/60 [&>span]:group-hover:[text-shadow:0_0_12px_var(--color-success)]",
 			},
 			shape: {
 				default: "",
