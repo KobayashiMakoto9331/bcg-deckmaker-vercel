@@ -83,7 +83,10 @@ export function toLegacyUser(user: AppUserRow) {
 	};
 }
 
-export async function loadInitialJson<T>(path: string, fallback: T): Promise<T> {
+export async function loadInitialJson<T>(
+	path: string,
+	fallback: T,
+): Promise<T> {
 	try {
 		const res = await fetch(path);
 		if (!res.ok) return fallback;

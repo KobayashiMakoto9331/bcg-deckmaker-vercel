@@ -1,10 +1,10 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import {
+	type DeckRow,
 	getSupabaseAdmin,
 	isSupabaseConfigured,
 	toLegacyDeck,
-	type DeckRow,
 } from "../_shared/supabase";
 
 const DEFAULT_DECKS: Array<{

@@ -1,5 +1,11 @@
-import { assertDeckNameWithinLimit, fetchLegacyDecks } from "@/app/api/_shared/decks";
-import { getSupabaseAdmin, isSupabaseConfigured } from "@/app/api/_shared/supabase";
+import {
+	assertDeckNameWithinLimit,
+	fetchLegacyDecks,
+} from "@/app/api/_shared/decks";
+import {
+	getSupabaseAdmin,
+	isSupabaseConfigured,
+} from "@/app/api/_shared/supabase";
 
 type RouteContext = {
 	params: Promise<{ id: string }>;

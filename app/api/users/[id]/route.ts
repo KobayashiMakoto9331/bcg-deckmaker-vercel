@@ -1,8 +1,8 @@
 import {
+	type AppUserRow,
 	getSupabaseAdmin,
 	isSupabaseConfigured,
 	toLegacyUser,
-	type AppUserRow,
 } from "../../_shared/supabase";
 
 type RouteContext = {

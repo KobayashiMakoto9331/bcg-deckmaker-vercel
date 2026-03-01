@@ -1,4 +1,8 @@
-import { getSupabaseAdmin, isSupabaseConfigured, toLegacyDeck } from "../../_shared/supabase";
+import {
+	getSupabaseAdmin,
+	isSupabaseConfigured,
+	toLegacyDeck,
+} from "../../_shared/supabase";
 
 type RouteContext = {
 	params: Promise<{ id: string }>;

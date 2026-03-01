@@ -90,7 +90,7 @@ const DeckSidebar = ({
 	const [previewCard, setPreviewCard] = useState(null);
 
 	return (
-		<div className="feature-panel z-100 flex h-full min-h-0 w-[300px] flex-col overflow-y-auto border-l border-primary/20 max-[900px]:h-auto max-[900px]:max-h-[60vh] max-[900px]:w-full">
+		<div className="feature-panel z-100 flex h-full min-h-0 w-[280px] shrink-0 flex-col overflow-y-auto border-l border-primary/20 max-[768px]:w-[240px] max-[640px]:h-auto max-[640px]:w-full max-[640px]:border-l-0 max-[640px]:border-t">
 			<div className="border-b border-[#333] p-4">
 				<div className="mt-2 text-sm text-[#aaa]">
 					Total: {totalCards} cards
@@ -102,7 +102,7 @@ const DeckSidebar = ({
 					View Details
 				</Button>
 			</div>
-			<div className="flex-1 overflow-y-auto p-4 max-[900px]:overflow-visible">
+			<div className="flex-1 overflow-y-auto p-4 max-[640px]:max-h-[40vh]">
 				{deckList.length === 0 ? (
 					<div className="mt-8 text-center text-[#666]">
 						{Object.keys(deck || {}).length > 0

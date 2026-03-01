@@ -204,20 +204,21 @@ const DeckEditor = ({ deck, cards, onSave, onClose, existingDeckNames }) => {
 	return (
 		<div className="DeckEditor deck-editor-root flex h-screen min-h-dvh flex-col overflow-hidden max-[900px]:h-auto max-[900px]:overflow-y-auto">
 			<div className="feature-panel deck-editor-toolbar flex items-center justify-between gap-4 border-b border-primary/22 px-8 py-2">
-				<div className="deck-editor-toolbar-inner flex flex-wrap items-center gap-4">
-					<Input
-						value={deckName}
-						onChange={(e) => setDeckName(e.target.value)}
-						className="w-[300px] min-w-[150px]"
-					/>
-					<Button onClick={debouncedSave}>Save Deck</Button>
+				<div className="deck-editor-toolbar-inner flex items-top gap-3">
+					<Button onClick={debouncedClose}>&lt;Back</Button>
+					<div className="w-full max-w-[300px]">
+						<Input
+							value={deckName}
+							onChange={(e) => setDeckName(e.target.value)}
+						/>
+					</div>
+					<Button onClick={debouncedSave}>Save</Button>
 					<Button onClick={handlePlay}>Play</Button>
 					<Button onClick={() => setIsFilterOpen(true)}>Filter</Button>
-					<Button onClick={debouncedClose}>&lt; Back</Button>
 				</div>
 			</div>
-			<div className="deck-editor-main flex flex-1 overflow-hidden max-[900px]:flex-col max-[900px]:overflow-visible">
-				<div className="flex-1 overflow-y-auto">
+			<div className="deck-editor-main flex flex-1 min-h-0 flex-row overflow-hidden max-[640px]:flex-col max-[640px]:overflow-visible">
+				<div className="min-w-0 flex-1 min-h-0 overflow-y-auto">
 					<CardGrid
 						cards={cards}
 						deck={deckCards}

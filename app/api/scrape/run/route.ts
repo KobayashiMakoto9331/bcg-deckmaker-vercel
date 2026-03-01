@@ -1,5 +1,9 @@
 import axios from "axios";
-import { inferMimeType, scrapeCards, type ScrapedCard } from "@/app/api/_shared/card-scraper";
+import {
+	inferMimeType,
+	type ScrapedCard,
+	scrapeCards,
+} from "@/app/api/_shared/card-scraper";
 import {
 	getSupabaseAdmin,
 	getSupabaseCardImagesBucket,
@@ -20,7 +24,8 @@ function inferExtension(url: string, contentType?: string) {
 		if (contentType.includes("png")) return "png";
 		if (contentType.includes("gif")) return "gif";
 		if (contentType.includes("svg")) return "svg";
-		if (contentType.includes("jpeg") || contentType.includes("jpg")) return "jpg";
+		if (contentType.includes("jpeg") || contentType.includes("jpg"))
+			return "jpg";
 	}
 	try {
 		const pathname = new URL(url).pathname.toLowerCase();
@@ -61,10 +66,12 @@ async function listExistingImageNames(
 	const pageSize = 100;
 	let offset = 0;
 	while (true) {
-		const { data, error } = await supabase.storage.from(bucket).list(IMAGE_PREFIX, {
-			limit: pageSize,
-			offset,
-		});
+		const { data, error } = await supabase.storage
+			.from(bucket)
+			.list(IMAGE_PREFIX, {
+				limit: pageSize,
+				offset,
+			});
 		if (error) throw error;
 		if (!data || data.length === 0) break;
 		for (const item of data) {
@@ -103,8 +110,9 @@ async function uploadCardImagesAndRewriteUrls(
 			return card;
 		}
 		const finalNameFromExisting =
-			Array.from(existingNames).find((name) => name.startsWith(`${baseName}.`)) ||
-			null;
+			Array.from(existingNames).find((name) =>
+				name.startsWith(`${baseName}.`),
+			) || null;
 		if (finalNameFromExisting) {
 			reusedCount += 1;
 			return {

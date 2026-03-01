@@ -179,13 +179,6 @@ textarea {
 	}
 }
 
-@media (max-width: 900px) {
-	.deck-editor-main {
-		flex-direction: column;
-		overflow: visible;
-	}
-}
-
 @media (orientation: landscape) and (max-height: 560px) {
 	html,
 	body {
@@ -223,7 +216,12 @@ textarea {
 	}
 
 	.deck-editor-main {
-		flex-direction: column;
 		overflow: visible;
+	}
+}
+
+@media (orientation: landscape) and (max-height: 560px) and (max-width: 640px) {
+	.deck-editor-main {
+		flex-direction: column;
 	}
 }

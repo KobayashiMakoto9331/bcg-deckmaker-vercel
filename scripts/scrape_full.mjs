@@ -1,9 +1,10 @@
+import fs from "node:fs/promises";
 import axios from "axios";
 import * as cheerio from "cheerio";
-import fs from "node:fs/promises";
 
 const BASE_URL = "https://www.gundam-gcg.com/jp/cards/";
-const LIST_URL_TEMPLATE = "https://www.gundam-gcg.com/jp/cards/index.php?package=";
+const LIST_URL_TEMPLATE =
+	"https://www.gundam-gcg.com/jp/cards/index.php?package=";
 const DETAIL_URL_TEMPLATE =
 	"https://www.gundam-gcg.com/jp/cards/detail.php?detailSearch=";
 const OUTPUT_JSON = "public/cards.json";
@@ -26,7 +27,9 @@ async function collectCardIds() {
 	}
 
 	for (const packageId of packageIds) {
-		const { data: listData } = await axios.get(`${LIST_URL_TEMPLATE}${packageId}`);
+		const { data: listData } = await axios.get(
+			`${LIST_URL_TEMPLATE}${packageId}`,
+		);
 		const $$ = cheerio.load(listData);
 		$$(".cardItem").each((_, el) => {
 			const dataSrc = $$(el).find("a.cardStr").attr("data-src");
@@ -96,10 +99,7 @@ async function scrape() {
 					}
 
 					$(".dataTit").each((_, el) => {
-						const key = $(el)
-							.text()
-							.trim()
-							.replace(/[:：]/g, "");
+						const key = $(el).text().trim().replace(/[:：]/g, "");
 						const val = $(el).next().text().trim();
 						if (key) card.stats[key] = val;
 					});

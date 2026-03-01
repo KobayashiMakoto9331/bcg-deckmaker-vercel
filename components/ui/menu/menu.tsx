@@ -11,7 +11,7 @@ import {
 	MenuRoot,
 	MenuTrigger,
 } from "@/components/cosmic/menu";
-import { Button, ButtonProps } from "../button/button";
+import { Button, type ButtonProps } from "../button/button";
 
 type MenuIcon = ComponentType<SVGProps<SVGSVGElement>>;
 

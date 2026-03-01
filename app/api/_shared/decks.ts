@@ -1,10 +1,10 @@
 import { randomUUID } from "node:crypto";
 import {
+	type DeckRow,
 	getDisplayLength,
 	getSupabaseAdmin,
 	toLegacyDeck,
 	uniqueDeckName,
-	type DeckRow,
 } from "./supabase";
 
 export async function fetchDeckRows() {

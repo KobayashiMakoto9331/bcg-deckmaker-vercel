@@ -1,10 +1,10 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import {
+	type AppUserRow,
 	getSupabaseAdmin,
 	isSupabaseConfigured,
 	toLegacyUser,
-	type AppUserRow,
 } from "../_shared/supabase";
 
 const DEFAULT_USERS = [{ id: "public", name: "Public", isReadOnly: true }];
