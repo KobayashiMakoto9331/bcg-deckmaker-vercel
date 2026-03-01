@@ -9,7 +9,6 @@ import MultiSelectDropdown from "./multi-select-dropdown";
 
 const COLORS = ["White", "Blue", "Purple", "Red", "Green"];
 const TYPES = ["UNIT", "PILOT", "COMMAND", "BASE"];
-const GRID_GAP_PX = { 4: 16, 8: 6 };
 const CARD_ASPECT_HEIGHT = 350 / 250;
 const CARD_BUTTON_ROW_PX = 30;
 const CHUNK_ROWS = 8;
@@ -18,6 +17,7 @@ const VirtualChunk = ({
 	chunkCards,
 	chunkHeight,
 	gridCols,
+	gridGapPx,
 	rootElement,
 	renderCard,
 }) => {
@@ -35,7 +35,11 @@ const VirtualChunk = ({
 	return (
 		<div
 			ref={ref}
-			className={`grid max-[480px]:grid-cols-3 max-[480px]:gap-2 ${gridCols === 8 ? "grid-cols-8 gap-1.5" : "grid-cols-4 gap-2"}`}
+			className="grid"
+			style={{
+				gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
+				gap: `${gridGapPx}px`,
+			}}
 		>
 			{chunkCards.map((card) => renderCard(card))}
 		</div>
@@ -58,7 +62,6 @@ const CardGrid = ({
 	const [activeTypes, setActiveTypes] = useState([]);
 	const [previewCard, setPreviewCard] = useState(null);
 	const [showFoil, setShowFoil] = useState(false);
-	const [gridCols, setGridCols] = useState(4);
 	const [viewportWidth, setViewportWidth] = useState(0);
 	const [viewportElement, setViewportElement] = useState(null);
 	const listViewportRef = useRef(null);
@@ -75,6 +78,14 @@ const CardGrid = ({
 	const [filterHPs, setFilterHPs] = useState([]);
 	const [filterRarities, setFilterRarities] = useState([]);
 	const [filterAbilities, setFilterAbilities] = useState([]);
+	const gridCols = useMemo(() => {
+		if (!viewportWidth) return 4;
+		if (viewportWidth <= 480) return 3;
+		if (viewportWidth <= 768) return 4;
+		if (viewportWidth <= 1200) return 5;
+		return 6;
+	}, [viewportWidth]);
+	const gridGapPx = gridCols >= 5 ? 10 : 16;
 
 	const clearAllFilters = () => {
 		setSearchTerm("");
@@ -367,14 +378,13 @@ const CardGrid = ({
 		const viewport = listViewportRef.current;
 		const width = viewportWidth || viewport?.clientWidth || 0;
 		if (!width) return 420;
-		const gap = gridCols === 8 ? GRID_GAP_PX[8] : GRID_GAP_PX[4];
-		const cardWidth = (width - gap * (gridCols - 1)) / gridCols;
+		const cardWidth = (width - gridGapPx * (gridCols - 1)) / gridCols;
 		const imageHeight = cardWidth * CARD_ASPECT_HEIGHT;
 		return Math.ceil(imageHeight + CARD_BUTTON_ROW_PX);
-	}, [gridCols, viewportWidth]);
+	}, [gridCols, gridGapPx, viewportWidth]);
 
 	const chunkSize = gridCols * CHUNK_ROWS;
-	const rowGap = gridCols === 8 ? GRID_GAP_PX[8] : GRID_GAP_PX[4];
+	const rowGap = gridGapPx;
 	const cardChunks = useMemo(() => {
 		const chunks = [];
 		for (let i = 0; i < filteredCards.length; i += chunkSize) {
@@ -410,7 +420,6 @@ const CardGrid = ({
 		showFoil ? "1" : "0",
 		sortKey,
 		sortDirection,
-		gridCols,
 	].join("|");
 
 	useEffect(() => {
@@ -444,7 +453,9 @@ const CardGrid = ({
 		return (
 			<div key={card.id}>
 				<div
-					className={`mb-1 flex min-h-[30px] justify-center ${gridCols === 8 ? "gap-0" : "gap-0.5"}`}
+					className={`mb-1 flex min-h-[30px] justify-center ${
+						gridCols >= 5 ? "gap-0" : "gap-0.5"
+					}`}
 				>
 					{!isRestricted &&
 						[0, 1, 2, 3, 4].map((num) => (
@@ -456,7 +467,7 @@ const CardGrid = ({
 								}}
 								selected={count === num}
 								className={`min-w-0 max-w-10 flex-1 px-0! ${
-									gridCols === 8 ? "py-0!" : "py-0.5!"
+									gridCols >= 5 ? "py-0!" : "py-0.5!"
 								}`}
 							>
 								{num}
@@ -479,7 +490,7 @@ const CardGrid = ({
 						alt={card.name}
 						fill
 						unoptimized
-						sizes={gridCols === 8 ? "12vw" : "25vw"}
+						sizes={gridCols >= 5 ? "18vw" : "25vw"}
 						className="relative z-1 block h-full w-full rounded-lg object-cover"
 						draggable={false}
 						onError={(e) => {
@@ -578,9 +589,6 @@ const CardGrid = ({
 							}
 						>
 							{sortDirection === "asc" ? "昇順" : "降順"}
-						</Button>
-						<Button onClick={() => setGridCols((prev) => (prev === 4 ? 8 : 4))}>
-							{gridCols === 4 ? "4列" : "8列"}
 						</Button>
 						<label className="flex items-center gap-2 rounded border border-[#444] px-3 py-1.5 text-sm text-[#eee]">
 							<input
@@ -681,6 +689,7 @@ const CardGrid = ({
 							chunkCards={chunk.chunkCards}
 							chunkHeight={chunk.chunkHeight}
 							gridCols={gridCols}
+							gridGapPx={gridGapPx}
 							rootElement={viewportElement}
 							renderCard={renderCard}
 						/>
