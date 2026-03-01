@@ -71,11 +71,6 @@ const DeckLobby = ({
 	const isPublicUser = currentUser?.id === "public";
 
 	const handleAdvancedAction = (action) => {
-		if (action === "create") {
-			onCreateNew();
-			return;
-		}
-
 		if (action === "import") {
 			if (isPublicUser) return;
 			setShowImportModal(true);
@@ -143,10 +138,6 @@ const DeckLobby = ({
 						className="w-auto min-w-[150px]"
 						actions={[
 							{
-								value: "create",
-								label: "Create",
-							},
-							{
 								value: "detail",
 								label: "Detail",
 								disabled: !selectedDeckId,
@@ -179,6 +170,7 @@ const DeckLobby = ({
 						]}
 						onActionSelect={handleAdvancedAction}
 					/>
+					<Button onClick={onCreateNew}>Create</Button>
 					<Button
 						disabled={!selectedDeckId || selectedDeck?.hasCriticalError}
 						onClick={() => onSelectDeck(selectedDeck)}
