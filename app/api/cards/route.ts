@@ -5,6 +5,7 @@ const CANDIDATE_PATHS = [
 	path.join(process.cwd(), "../gcg_deckmaker/public/cards_packed.json"),
 	path.join(process.cwd(), "../gcg_deckmaker/src/data/cards.json"),
 	path.join(process.cwd(), "public/cards_packed.json"),
+	path.join(process.cwd(), "public/cards.json"),
 ];
 
 export async function GET() {

@@ -10,7 +10,12 @@
 		"fix": "biome check --write . --unsafe",
 		"format": "biome format --write .",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"scrape": "node scripts/scrape_full.mjs && node scripts/download_images.mjs && node scripts/pack_images.mjs",
+		"scrape:fetch": "node scripts/scrape_full.mjs && node scripts/download_images.mjs",
+		"pack-images": "node scripts/pack_images.mjs",
+		"scrape:job": "node scripts/job_scrape.mjs",
+		"scrape:auto": "node scripts/auto_scrape.mjs"
 	},
 	"dependencies": {
 		"@ark-ui/react": "^5.32.0",
@@ -37,6 +42,8 @@
 		"@types/react-dom": "^19",
 		"@vitest/browser-playwright": "^4.0.18",
 		"@vitest/coverage-v8": "^4.0.18",
+		"axios": "^1.13.6",
+		"cheerio": "^1.2.0",
 		"playwright": "^1.58.2",
 		"storybook": "^10.2.13",
 		"tailwindcss": "^4",
