@@ -173,7 +173,8 @@ const IconSettingModal = ({
 						</div>
 						<div className="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
 							{deckList.map((card) => (
-								<div
+								<button
+									type="button"
 									key={card.id}
 									onClick={() => handleCardClick(card.id)}
 									className="cursor-pointer text-center"
@@ -193,7 +194,7 @@ const IconSettingModal = ({
 											className="rounded-full object-cover object-top scale-150"
 										/>
 									</div>
-								</div>
+								</button>
 							))}
 						</div>
 					</DialogContent>

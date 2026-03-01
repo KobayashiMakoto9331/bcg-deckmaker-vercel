@@ -77,15 +77,22 @@ const DeckLobby = ({
 					<span className="text-[#aaa]">
 						User: <strong className="text-white">{currentUser?.name}</strong>
 					</span>
-					<Button onClick={debouncedChangeUser}>Change User</Button>
+					<Button onClick={debouncedChangeUser} variant="secondary">
+						Change User
+					</Button>
 				</div>
 				<div className="flex gap-2">
 					{!isPublicUser && (
-						<Button onClick={() => setShowImportModal(true)}>
+						<Button
+							onClick={() => setShowImportModal(true)}
+							variant="secondary"
+						>
 							Import from Public
 						</Button>
 					)}
-					<Button onClick={debouncedCreateNew}>Create New</Button>
+					<Button onClick={debouncedCreateNew} variant="success">
+						Create New
+					</Button>
 				</div>
 			</div>
 
@@ -101,6 +108,7 @@ const DeckLobby = ({
 							setSelectedDeckId(null);
 						}
 					}}
+					variant="destructive"
 				>
 					Delete
 				</Button>

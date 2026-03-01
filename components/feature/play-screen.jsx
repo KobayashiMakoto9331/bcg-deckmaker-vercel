@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button/button";
 import CardPreviewModal from "./card-preview-modal";
@@ -57,7 +58,7 @@ const PlayScreen = ({ deck, cards, onClose }) => {
 	if (!isInitialized) return <div className="text-white">Initializing...</div>;
 
 	return (
-		<div className="fixed inset-0 z-[3000] flex flex-col overflow-hidden bg-[var(--color-background)] [background-image:var(--app-bg)] px-16 py-4 text-white">
+		<div className="fixed inset-0 z-3000 flex flex-col overflow-hidden bg-(--color-background) [background-image:var(--app-bg)] px-16 py-4 text-white">
 			<div className="shrink-0">
 				<div className="mb-2 flex w-full items-center gap-4">
 					<h3 className="m-0 p-0 text-left text-white">
@@ -142,12 +143,15 @@ const CardView = ({ card, onInfoClick }) => {
 			>
 				i
 			</Button>
-			<img
+			<Image
 				src={card.image}
 				alt={card.name}
+				fill
+				unoptimized
+				sizes="70px"
 				className="h-full w-full object-contain"
 				onError={(e) => {
-					e.target.style.display = "none";
+					e.currentTarget.style.display = "none";
 				}}
 			/>
 		</div>

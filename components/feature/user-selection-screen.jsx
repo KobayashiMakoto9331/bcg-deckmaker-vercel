@@ -81,9 +81,7 @@ const UserSelectionScreen = ({ onSelectUser }) => {
 	return (
 		<div className="user-selection-container">
 			<div className="user-selection-card">
-				<h1 className="m-0 mb-2 text-center text-5xl text-[#63d6ff]">
-					Satisfaction-GCG
-				</h1>
+				<h1 className="m-0 mb-2 text-center text-5xl">Satisfaction-GCG</h1>
 				{error && (
 					<div className="mb-4 rounded border border-[rgba(255,114,132,0.45)] bg-[rgba(92,24,30,0.62)] p-2 text-center text-[#ff8e8e]">
 						{error}
@@ -115,6 +113,8 @@ const UserSelectionScreen = ({ onSelectUser }) => {
 								key={user.id}
 								type="button"
 								onClick={() => setSelectedUserId(user.id)}
+								selected={selectedUserId === user.id}
+								className="w-full"
 							>
 								{user.name}
 							</Button>
@@ -128,6 +128,7 @@ const UserSelectionScreen = ({ onSelectUser }) => {
 						if (user) onSelectUser(user);
 					}}
 					className="mb-2 w-full"
+					variant="success"
 				>
 					OK
 				</Button>
@@ -157,6 +158,7 @@ const UserSelectionScreen = ({ onSelectUser }) => {
 						}
 						onClick={() => selectedUserId && handleDeleteUser(selectedUserId)}
 						className="flex-1"
+						variant="destructive"
 					>
 						Delete
 					</Button>

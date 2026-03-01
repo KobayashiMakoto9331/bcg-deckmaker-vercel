@@ -77,7 +77,9 @@ export const Selected: Story = {
 				</div>
 			</div>
 			<div className="flex flex-col gap-3">
-				<h3 className="text-white text-sm font-semibold mb-2">Selected State</h3>
+				<h3 className="text-white text-sm font-semibold mb-2">
+					Selected State
+				</h3>
 				<div className="grid gap-3 sm:grid-cols-2">
 					{variants.map((variant) => (
 						<Button key={variant} {...args} variant={variant} selected={true}>

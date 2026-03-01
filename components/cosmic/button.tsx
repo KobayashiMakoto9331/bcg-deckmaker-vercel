@@ -39,31 +39,31 @@ const buttonVariants = cva(
 				variant: "default",
 				selected: true,
 				className:
-					"[--color-frame-1-fill:var(--color-primary)]/70 [&:hover_svg]:drop-shadow-2xl",
+					"[--color-frame-1-fill:var(--color-primary)]/70 [--color-frame-2-fill:var(--color-primary)]/16 hover:[--color-frame-1-fill:var(--color-primary)]/70 hover:[--color-frame-2-fill:var(--color-primary)]/16 [&:hover_svg]:drop-shadow-2xl",
 			},
 			{
 				variant: "accent",
 				selected: true,
 				className:
-					"[--color-frame-1-fill:var(--color-accent)]/80 [&:hover_svg]:drop-shadow-2xl",
+					"[--color-frame-1-fill:var(--color-accent)]/80 [--color-frame-2-fill:var(--color-accent)]/28 hover:[--color-frame-1-fill:var(--color-accent)]/80 hover:[--color-frame-2-fill:var(--color-accent)]/28 [&:hover_svg]:drop-shadow-2xl",
 			},
 			{
 				variant: "destructive",
 				selected: true,
 				className:
-					"[--color-frame-1-fill:var(--color-destructive)]/70 [&:hover_svg]:drop-shadow-2xl",
+					"[--color-frame-1-fill:var(--color-destructive)]/70 [--color-frame-2-fill:var(--color-destructive)]/16 hover:[--color-frame-1-fill:var(--color-destructive)]/70 hover:[--color-frame-2-fill:var(--color-destructive)]/16 [&:hover_svg]:drop-shadow-2xl",
 			},
 			{
 				variant: "secondary",
 				selected: true,
 				className:
-					"[--color-frame-1-fill:var(--color-secondary)]/60 [&:hover_svg]:drop-shadow-2xl",
+					"[--color-frame-1-fill:var(--color-secondary)]/60 [--color-frame-2-fill:var(--color-secondary)]/16 hover:[--color-frame-1-fill:var(--color-secondary)]/60 hover:[--color-frame-2-fill:var(--color-secondary)]/16 [&:hover_svg]:drop-shadow-2xl",
 			},
 			{
 				variant: "success",
 				selected: true,
 				className:
-					"[--color-frame-1-fill:var(--color-success)]/70 [&:hover_svg]:drop-shadow-2xl",
+					"[--color-frame-1-fill:var(--color-success)]/70 [--color-frame-2-fill:var(--color-success)]/16 hover:[--color-frame-1-fill:var(--color-success)]/70 hover:[--color-frame-2-fill:var(--color-success)]/16 [&:hover_svg]:drop-shadow-2xl",
 			},
 		],
 		defaultVariants: {
