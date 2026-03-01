@@ -35,9 +35,8 @@ async function mapWithConcurrency<T, R>(
 	return results;
 }
 
-export async function collectCardIds() {
+export async function collectPackageIds() {
 	const packageIds = new Set<string>();
-	const cardIds = new Set<string>();
 
 	const { data } = await axios.get(BASE_URL, { timeout: 20_000 });
 	const $ = cheerio.load(data);
@@ -50,7 +49,14 @@ export async function collectCardIds() {
 	// Keep a fallback package for resilience.
 	if (packageIds.size === 0) packageIds.add("615103");
 
-	for (const packageId of packageIds) {
+	return Array.from(packageIds);
+}
+
+export async function collectCardIds(packageIds?: string[]) {
+	const cardIds = new Set<string>();
+	const targetPackageIds = packageIds ?? (await collectPackageIds());
+
+	for (const packageId of targetPackageIds) {
 		const { data: listData } = await axios.get(`${LIST_URL_TEMPLATE}${packageId}`, {
 			timeout: 20_000,
 		});
@@ -67,7 +73,8 @@ export async function collectCardIds() {
 }
 
 export async function scrapeCards() {
-	const ids = await collectCardIds();
+	const packageIds = await collectPackageIds();
+	const ids = await collectCardIds(packageIds);
 	const results = await mapWithConcurrency(ids, 8, async (id) => {
 		try {
 			const { data } = await axios.get(`${DETAIL_URL_TEMPLATE}${id}`, {

@@ -30,24 +30,14 @@ function App() {
 		const loadCards = async () => {
 			setIsLoadingCards(true);
 			try {
-				const res = await fetch(`/cards_packed.json?t=${Date.now()}`);
+				const res = await fetch(`/api/cards?t=${Date.now()}`);
 				if (res.ok) {
 					const data = await res.json();
 					setCardData(data);
 					return;
 				}
-				throw new Error("Packed cards not found");
+				throw new Error("Cards API returned non-OK response");
 			} catch {
-				try {
-					const res = await fetch(`/api/cards?t=${Date.now()}`);
-					if (res.ok) {
-						const data = await res.json();
-						setCardData(data);
-						return;
-					}
-				} catch {
-					// keep empty
-				}
 				setCardData([]);
 			} finally {
 				setIsLoadingCards(false);
