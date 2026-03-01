@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import { Button } from "@/components/ui/button/button";
 import { Input } from "@/components/ui/input/input";
 import filterConfig from "@/legacy/data/filterConfig.json";
@@ -8,6 +9,38 @@ import MultiSelectDropdown from "./multi-select-dropdown";
 
 const COLORS = ["White", "Blue", "Purple", "Red", "Green"];
 const TYPES = ["UNIT", "PILOT", "COMMAND", "BASE"];
+const GRID_GAP_PX = { 4: 16, 8: 6 };
+const CARD_ASPECT_HEIGHT = 350 / 250;
+const CARD_BUTTON_ROW_PX = 30;
+const CHUNK_ROWS = 8;
+
+const VirtualChunk = ({
+	chunkCards,
+	chunkHeight,
+	gridCols,
+	rootElement,
+	renderCard,
+}) => {
+	const { ref, inView } = useInView({
+		skip: !rootElement,
+		root: rootElement,
+		rootMargin: "250px 0px",
+		threshold: 0,
+	});
+
+	if (!rootElement || !inView) {
+		return <div ref={ref} style={{ height: `${chunkHeight}px` }} />;
+	}
+
+	return (
+		<div
+			ref={ref}
+			className={`grid ${gridCols === 8 ? "grid-cols-8 gap-1.5" : "grid-cols-4 gap-4"}`}
+		>
+			{chunkCards.map((card) => renderCard(card))}
+		</div>
+	);
+};
 
 const CardGrid = ({
 	cards = [],
@@ -26,6 +59,9 @@ const CardGrid = ({
 	const [previewCard, setPreviewCard] = useState(null);
 	const [showFoil, setShowFoil] = useState(false);
 	const [gridCols, setGridCols] = useState(4);
+	const [viewportWidth, setViewportWidth] = useState(0);
+	const [viewportElement, setViewportElement] = useState(null);
+	const listViewportRef = useRef(null);
 
 	const [filterFeatures, setFilterFeatures] = useState([]);
 	const [filterLinks, setFilterLinks] = useState([]);
@@ -327,6 +363,133 @@ const CardGrid = ({
 		effectiveRarityMap,
 	]);
 
+	const rowHeight = useMemo(() => {
+		const viewport = listViewportRef.current;
+		const width = viewportWidth || viewport?.clientWidth || 0;
+		if (!width) return 420;
+		const gap = gridCols === 8 ? GRID_GAP_PX[8] : GRID_GAP_PX[4];
+		const cardWidth = (width - gap * (gridCols - 1)) / gridCols;
+		const imageHeight = cardWidth * CARD_ASPECT_HEIGHT;
+		return Math.ceil(imageHeight + CARD_BUTTON_ROW_PX);
+	}, [gridCols, viewportWidth]);
+
+	const chunkSize = gridCols * CHUNK_ROWS;
+	const rowGap = gridCols === 8 ? GRID_GAP_PX[8] : GRID_GAP_PX[4];
+	const cardChunks = useMemo(() => {
+		const chunks = [];
+		for (let i = 0; i < filteredCards.length; i += chunkSize) {
+			const chunkCards = filteredCards.slice(i, i + chunkSize);
+			const rowsInChunk = Math.ceil(chunkCards.length / gridCols);
+			const chunkHeight =
+				rowsInChunk * rowHeight + Math.max(0, rowsInChunk - 1) * rowGap;
+			chunks.push({
+				id: `${i}-${chunkCards[0]?.id || "chunk"}`,
+				chunkCards,
+				chunkHeight,
+			});
+		}
+		return chunks;
+	}, [filteredCards, chunkSize, gridCols, rowHeight, rowGap]);
+
+	const virtualResetKey = [
+		searchTerm,
+		activeColors.join(","),
+		activeTypes.join(","),
+		filterFeatures.join(","),
+		filterLinks.join(","),
+		filterSources.join(","),
+		filterObtains.join(","),
+		filterTerrains.join(","),
+		filterSets.join(","),
+		filterLevels.join(","),
+		filterCosts.join(","),
+		filterAPs.join(","),
+		filterHPs.join(","),
+		filterRarities.join(","),
+		filterAbilities.join(","),
+		showFoil ? "1" : "0",
+		sortKey,
+		sortDirection,
+		gridCols,
+	].join("|");
+
+	useEffect(() => {
+		const viewport = listViewportRef.current;
+		if (!viewport || typeof ResizeObserver === "undefined") return;
+		setViewportElement(viewport);
+		const updateSize = () => {
+			setViewportWidth(viewport.clientWidth || 0);
+		};
+		updateSize();
+		const observer = new ResizeObserver(updateSize);
+		observer.observe(viewport);
+		return () => observer.disconnect();
+	}, []);
+
+	useEffect(() => {
+		void virtualResetKey;
+		if (listViewportRef.current) listViewportRef.current.scrollTop = 0;
+	}, [virtualResetKey]);
+
+	const renderCard = (card) => {
+		const count = deck[card.id] || 0;
+		const isRestrictedName =
+			filterConfig.deckConstruction?.restrictedNames?.includes(card.name);
+		const cardType = card.stats?.タイプ;
+		const isRestrictedType =
+			cardType && filterConfig.deckConstruction?.restrictedTypes?.includes(cardType);
+		const isRestricted = isRestrictedName || isRestrictedType;
+
+		return (
+			<div key={card.id}>
+				<div
+					className={`mb-1 flex min-h-[30px] justify-center ${gridCols === 8 ? "gap-0" : "gap-0.5"}`}
+				>
+					{!isRestricted &&
+						[0, 1, 2, 3, 4].map((num) => (
+							<Button
+								key={num}
+								onClick={(e) => {
+									e.stopPropagation();
+									onSetCount?.(card, num);
+								}}
+								selected={count === num}
+								className={`min-w-0 max-w-10 flex-1 px-0! ${
+									gridCols === 8 ? "py-0!" : "py-0.5!"
+								}`}
+							>
+								{num}
+							</Button>
+						))}
+				</div>
+				<button
+					type="button"
+					className="relative aspect-250/350 w-full overflow-hidden rounded-lg bg-black cursor-pointer"
+					onClick={(e) => {
+						e.stopPropagation();
+						setPreviewCard(card);
+					}}
+				>
+					<div className="absolute inset-0 z-0 flex items-center justify-center p-2.5 text-center text-[0.9rem] text-[#888]">
+						{card.name}
+					</div>
+					<Image
+						src={card.image}
+						alt={card.name}
+						fill
+						unoptimized
+						sizes={gridCols === 8 ? "12vw" : "25vw"}
+						className="relative z-1 block h-full w-full rounded-lg object-cover"
+						draggable={false}
+						onError={(e) => {
+							e.currentTarget.style.display = "none";
+						}}
+					/>
+				</button>
+			</div>
+		);
+	};
+
 	return (
 		<div className="p-0">
 			{isFilterOpen && (
@@ -507,67 +670,21 @@ const CardGrid = ({
 
 			<div className="mb-2">Showing {filteredCards.length} cards</div>
 			<div
-				className={`grid ${gridCols === 8 ? "grid-cols-8 gap-1.5" : "grid-cols-4 gap-4"}`}
+				ref={listViewportRef}
+				className="max-h-[calc(100vh-240px)] overflow-y-auto pr-1"
 			>
-				{filteredCards.map((card) => {
-					const count = deck[card.id] || 0;
-					const isRestrictedName =
-						filterConfig.deckConstruction?.restrictedNames?.includes(card.name);
-					const cardType = card.stats?.タイプ;
-					const isRestrictedType =
-						cardType &&
-						filterConfig.deckConstruction?.restrictedTypes?.includes(cardType);
-					const isRestricted = isRestrictedName || isRestrictedType;
-					return (
-						<div key={card.id}>
-							{!isRestricted && (
-								<div
-									className={`mb-1 flex justify-center ${gridCols === 8 ? "gap-0" : "gap-0.5"}`}
-								>
-									{[0, 1, 2, 3, 4].map((num) => (
-										<Button
-											key={num}
-											onClick={(e) => {
-												e.stopPropagation();
-												onSetCount?.(card, num);
-											}}
-											selected={count === num}
-											className={`min-w-0 max-w-10 flex-1 px-0! ${
-												gridCols === 8 ? "py-0!" : "py-0.5!"
-											}`}
-										>
-											{num}
-										</Button>
-									))}
-								</div>
-							)}
-							<button
-								type="button"
-								className="relative aspect-250/350 w-full overflow-hidden rounded-lg bg-black cursor-pointer"
-								onClick={(e) => {
-									e.stopPropagation();
-									setPreviewCard(card);
-								}}
-							>
-								<div className="absolute inset-0 z-0 flex items-center justify-center p-2.5 text-center text-[0.9rem] text-[#888]">
-									{card.name}
-								</div>
-								<Image
-									src={card.image}
-									alt={card.name}
-									fill
-									unoptimized
-									sizes={gridCols === 8 ? "12vw" : "25vw"}
-									className="relative z-1 block h-full w-full rounded-lg object-cover"
-									draggable={false}
-									onError={(e) => {
-										e.currentTarget.style.display = "none";
-									}}
-								/>
-							</button>
-						</div>
-					);
-				})}
+				<div className="flex flex-col gap-2">
+					{cardChunks.map((chunk) => (
+						<VirtualChunk
+							key={chunk.id}
+							chunkCards={chunk.chunkCards}
+							chunkHeight={chunk.chunkHeight}
+							gridCols={gridCols}
+							rootElement={viewportElement}
+							renderCard={renderCard}
+						/>
+					))}
+				</div>
 			</div>
 			{previewCard && (
 				<CardPreviewModal

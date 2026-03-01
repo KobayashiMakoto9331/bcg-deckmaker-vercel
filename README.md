@@ -44,6 +44,12 @@ npm run scrape:auto
   `scripts/download_images.mjs` の既存画像スキップで実装しています。
 - 定期実行のログ出力は `scripts/job_scrape.mjs` 経由で `update.log` に記録されます。
 
+## Vercel 定期実行
+
+- `vercel.json` の cron で `0 */6 * * *`（UTC）に `/api/scrape/run` を実行します。
+- `/api/scrape/run` はカードをスクレイプし、Supabase Storage に `cards.json` を保存します。
+- `/api/cards` は Supabase Storage の `cards.json`（存在すれば）を返します。
+
 ## 移行実装メモ
 
 - 画面エントリは `app/page.tsx` -> `app/client.tsx` -> `legacy/App.jsx`。

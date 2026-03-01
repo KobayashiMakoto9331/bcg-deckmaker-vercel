@@ -14,6 +14,8 @@
 ```bash
 SUPABASE_URL=...
 SUPABASE_SECRET_KEY=...
+SUPABASE_CARDS_BUCKET=gcg-data
+CRON_SECRET=...
 # (legacy fallback)
 # SUPABASE_SERVICE_ROLE_KEY=...
 NEXT_PUBLIC_STORAGE_MODE=supabase
@@ -34,15 +36,27 @@ NEXT_PUBLIC_STORAGE_MODE=supabase
 - `POST /api/decks/:id/rename`
 - `POST /api/decks/:id/export-public`
 - `POST /api/decks/:id/import-public`
+- `GET /api/scrape/run` (Vercel Cron 用)
 
-## 4. 初回シード
+## 4. Supabase Storage バケット
+
+- バケット名: `SUPABASE_CARDS_BUCKET`（既定値 `gcg-data`）
+- 事前にバケットを作成してください（公開/非公開どちらでも可）
+- `/api/scrape/run` 実行時に `cards.json` を書き込みます
+
+## 5. 初回シード
 
 `app_users` / `decks` が空のとき、以下から初期データを投入します:
 
 - `public/initial_users.json`
 - `public/initial_decks.json`
 
-## 5. 注意点
+## 6. Vercel Cron
+
+- `vercel.json` で `/api/scrape/run` を 6時間ごとに実行します（UTC）。
+- `CRON_SECRET` を設定すると Bearer 認証が有効になります。
+
+## 7. 注意点
 
 - いまは `secret key`（または legacy `service role`）を Next API から使うサーバーアクセス前提です
 - 直接クライアントアクセス + RLS は次フェーズで追加する想定です

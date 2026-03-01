@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ADMIN_KEY =
 	process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SUPABASE_CARDS_BUCKET = process.env.SUPABASE_CARDS_BUCKET ?? "gcg-data";
 
 export type AppUserRow = {
 	id: string;
@@ -37,6 +38,10 @@ export function getSupabaseAdmin() {
 	return createClient(SUPABASE_URL, SUPABASE_ADMIN_KEY, {
 		auth: { persistSession: false, autoRefreshToken: false },
 	});
+}
+
+export function getSupabaseCardsBucket() {
+	return SUPABASE_CARDS_BUCKET;
 }
 
 export function getDisplayLength(str: string) {
