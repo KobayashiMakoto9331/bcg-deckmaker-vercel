@@ -90,8 +90,8 @@ const DeckSidebar = ({
 	const [previewCard, setPreviewCard] = useState(null);
 
 	return (
-		<div className="feature-panel z-100 flex h-full min-h-0 w-[280px] shrink-0 flex-col overflow-y-auto border-l border-primary/20 max-[768px]:w-[240px] max-[640px]:h-auto max-[640px]:w-full max-[640px]:border-l-0 max-[640px]:border-t">
-			<div className="border-b border-[#333] p-4">
+		<div className="sticky top-0 z-50 flex h-[calc(100dvh-1rem)] max-h-dvh min-h-0 w-[280px] shrink-0 self-start flex-col overflow-hidden border border-(--panel-border) border-l border-primary/20 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--panel-bg-soft)_85%,transparent)_0%,var(--panel-bg)_100%)] shadow-(--panel-glow) backdrop-blur-sm max-[768px]:w-[240px] max-[640px]:static max-[640px]:h-auto max-[640px]:max-h-none">
+			<div className="shrink-0 border-b border-[#333] p-4">
 				<div className="mt-2 text-sm text-[#aaa]">
 					Total: {totalCards} cards
 				</div>
@@ -102,7 +102,7 @@ const DeckSidebar = ({
 					View Details
 				</Button>
 			</div>
-			<div className="flex-1 overflow-y-auto p-4 max-[640px]:max-h-[40vh]">
+			<div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4">
 				{deckList.length === 0 ? (
 					<div className="mt-8 text-center text-[#666]">
 						{Object.keys(deck || {}).length > 0

@@ -35,7 +35,7 @@ const VirtualChunk = ({
 	return (
 		<div
 			ref={ref}
-			className={`grid ${gridCols === 8 ? "grid-cols-8 gap-1.5" : "grid-cols-4 gap-4"}`}
+			className={`grid max-[480px]:grid-cols-3 max-[480px]:gap-2 ${gridCols === 8 ? "grid-cols-8 gap-1.5" : "grid-cols-4 gap-2"}`}
 		>
 			{chunkCards.map((card) => renderCard(card))}
 		</div>
