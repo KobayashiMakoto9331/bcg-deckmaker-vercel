@@ -11,6 +11,7 @@ import {
 	MenuRoot,
 	MenuTrigger,
 } from "@/components/cosmic/menu";
+import { Button, ButtonProps } from "../button/button";
 
 type MenuIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -27,6 +28,8 @@ type MenuProps = {
 	className?: string;
 	contentClassName?: string;
 	onActionSelect?: (value: string) => void;
+	triggerIcon?: MenuIcon;
+	variant?: ButtonProps["variant"];
 };
 
 const defaultActions: MenuAction[] = [
@@ -42,12 +45,16 @@ function Menu({
 	className,
 	contentClassName,
 	onActionSelect,
+	triggerIcon: TriggerIcon = PenLine,
+	variant = "default",
 }: MenuProps) {
 	return (
 		<MenuRoot>
-			<MenuTrigger className={twMerge(["w-56", className])}>
-				<PenLine className="size-4 me-2.5" />
-				{label}
+			<MenuTrigger className={twMerge(["w-56", className])} asChild>
+				<Button shape="default" variant={variant}>
+					<TriggerIcon className="size-4 me-2.5" />
+					{label}
+				</Button>
 			</MenuTrigger>
 			<MenuPositioner>
 				<MenuContent className={contentClassName}>

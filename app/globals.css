@@ -76,6 +76,10 @@ body {
 	-webkit-user-select: none;
 }
 
+#__next {
+	min-height: 100dvh;
+}
+
 input,
 textarea {
 	user-select: text;
@@ -172,5 +176,54 @@ textarea {
 		border-radius: 0;
 		box-shadow: none;
 		padding: 1rem;
+	}
+}
+
+@media (max-width: 900px) {
+	.deck-editor-main {
+		flex-direction: column;
+		overflow: visible;
+	}
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+	html,
+	body {
+		height: auto;
+		min-height: 100%;
+		overflow: auto;
+		overscroll-behavior: auto;
+	}
+
+	.feature-root {
+		min-height: 100dvh;
+		overflow-y: auto;
+	}
+
+	.user-selection-container {
+		height: auto;
+		min-height: 100dvh;
+		padding-block: 0.5rem;
+		overflow-y: auto;
+	}
+
+	.user-selection-card {
+		min-height: auto;
+		padding: 1rem;
+	}
+
+	.deck-editor-root {
+		height: auto;
+		min-height: 100dvh;
+		overflow-y: auto;
+	}
+
+	.deck-editor-toolbar {
+		padding: 0.5rem 1rem;
+	}
+
+	.deck-editor-main {
+		flex-direction: column;
+		overflow: visible;
 	}
 }

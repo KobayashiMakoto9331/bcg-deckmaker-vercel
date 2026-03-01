@@ -13,6 +13,7 @@ alwaysApply: true
 - Avoid inline `style` unless values must be dynamic at runtime (e.g. per-item computed color/size/position).
 - Do not add global CSS that changes visuals of `components/ui`. If global styles are needed, scope them to feature-specific wrappers (e.g. `.feature-root`).
 - Preserve the visual contract of shared UI primitives in `components/ui` (especially `Button` and `Input`).
+- Treat `#14a0e6` (equivalent to `rgb(20, 160, 230)`) as the core base color for feature UI. For emphasis states, derive shades/tints from this base first before introducing other hues.
 - Use project color tokens consistently:
   - `--color-primary: rgb(20, 160, 230)`
   - `--color-primary-foreground: rgb(255, 255, 255)`

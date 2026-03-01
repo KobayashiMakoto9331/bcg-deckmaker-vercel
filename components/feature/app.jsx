@@ -5,6 +5,7 @@ import {
 	deleteDeckFromStorage,
 	exportDeckToPublic,
 	getDecks,
+	getUsers,
 	importDeckFromPublic,
 	renameDeckInStorage,
 	saveDeckToStorage,
@@ -21,12 +22,14 @@ function App() {
 	const [currentDeckId, setCurrentDeckId] = useState(null);
 	const [tempDeckId, setTempDeckId] = useState(null);
 	const [decks, setDecks] = useState([]);
+	const [users, setUsers] = useState([]);
 	const [currentUser, setCurrentUser] = useState(null);
 	const [cardData, setCardData] = useState([]);
 	const [isLoadingCards, setIsLoadingCards] = useState(true);
 
 	useEffect(() => {
 		getDecks().then(setDecks);
+		getUsers().then(setUsers);
 	}, []);
 
 	useEffect(() => {
@@ -213,6 +216,7 @@ function App() {
 						decks={displayedDecks}
 						publicDecks={publicDecks}
 						cards={cardData}
+						users={users}
 						onCreateNew={handleCreateNew}
 						onSelectDeck={handleSelectDeck}
 						onCopyDeck={handleCopyDeck}
@@ -221,7 +225,7 @@ function App() {
 						onExportToPublic={handleExportToPublic}
 						onImportFromPublic={handleImportFromPublic}
 						currentUser={currentUser}
-						onChangeUser={() => setCurrentUser(null)}
+						onSelectUser={setCurrentUser}
 					/>
 				)}
 				{view === "editor" && (

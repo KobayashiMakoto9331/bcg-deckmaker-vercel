@@ -202,26 +202,13 @@ const DeckEditor = ({ deck, cards, onSave, onClose, existingDeckNames }) => {
 	}, []);
 
 	return (
-		<div
-			className="DeckEditor"
-			style={{ display: "flex", flexDirection: "column", height: "100vh" }}
-		>
-			<div
-				className="feature-panel"
-				style={{
-					padding: "0.5rem 2rem",
-					borderBottom: "1px solid rgba(123, 190, 255, 0.22)",
-					display: "flex",
-					alignItems: "center",
-					gap: "1rem",
-					justifyContent: "space-between",
-				}}
-			>
-				<div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+		<div className="DeckEditor deck-editor-root flex h-screen min-h-dvh flex-col overflow-hidden max-[900px]:h-auto max-[900px]:overflow-y-auto">
+			<div className="feature-panel deck-editor-toolbar flex items-center justify-between gap-4 border-b border-primary/22 px-8 py-2">
+				<div className="deck-editor-toolbar-inner flex flex-wrap items-center gap-4">
 					<Input
 						value={deckName}
 						onChange={(e) => setDeckName(e.target.value)}
-						style={{ width: "300px", minWidth: "150px" }}
+						className="w-[300px] min-w-[150px]"
 					/>
 					<Button onClick={debouncedSave}>Save Deck</Button>
 					<Button onClick={handlePlay}>Play</Button>
@@ -229,8 +216,8 @@ const DeckEditor = ({ deck, cards, onSave, onClose, existingDeckNames }) => {
 					<Button onClick={debouncedClose}>&lt; Back</Button>
 				</div>
 			</div>
-			<div style={{ flex: 1, display: "flex", overflow: "hidden" }}>
-				<div style={{ flex: 1, overflowY: "auto" }}>
+			<div className="deck-editor-main flex flex-1 overflow-hidden max-[900px]:flex-col max-[900px]:overflow-visible">
+				<div className="flex-1 overflow-y-auto">
 					<CardGrid
 						cards={cards}
 						deck={deckCards}

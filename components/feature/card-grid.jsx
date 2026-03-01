@@ -437,7 +437,8 @@ const CardGrid = ({
 			filterConfig.deckConstruction?.restrictedNames?.includes(card.name);
 		const cardType = card.stats?.タイプ;
 		const isRestrictedType =
-			cardType && filterConfig.deckConstruction?.restrictedTypes?.includes(cardType);
+			cardType &&
+			filterConfig.deckConstruction?.restrictedTypes?.includes(cardType);
 		const isRestricted = isRestrictedName || isRestrictedType;
 
 		return (
@@ -491,7 +492,7 @@ const CardGrid = ({
 	};
 
 	return (
-		<div className="p-0">
+		<div className="flex h-full min-h-0 flex-col p-0">
 			{isFilterOpen && (
 				<div className="feature-modal-overlay fixed inset-0 z-2000 flex flex-col gap-4 overflow-y-auto px-16 py-8">
 					<div className="flex items-center justify-between border-b border-[#333] pb-4">
@@ -671,7 +672,7 @@ const CardGrid = ({
 			<div className="mb-2">Showing {filteredCards.length} cards</div>
 			<div
 				ref={listViewportRef}
-				className="max-h-[calc(100vh-240px)] overflow-y-auto pr-1"
+				className="min-h-0 flex-1 overflow-y-auto pr-1"
 			>
 				<div className="flex flex-col gap-2">
 					{cardChunks.map((chunk) => (
