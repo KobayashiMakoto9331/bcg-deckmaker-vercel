@@ -25,7 +25,6 @@ const DeckDetailModal = ({
 	iconCards = [],
 	onSetIconCards,
 }) => {
-	const [showIconModal, setShowIconModal] = useState(false);
 	const [previewCard, setPreviewCard] = useState(null);
 
 	const deckList = useMemo(() => {
@@ -38,6 +37,20 @@ const DeckDetailModal = ({
 			.filter(Boolean);
 	}, [deck, cards]);
 
+	const toggleIconCard = (cardId) => {
+		if (!onSetIconCards) return;
+		const isSelected = iconCards.includes(cardId);
+		if (isSelected) {
+			onSetIconCards(iconCards.filter((id) => id !== cardId));
+			return;
+		}
+		if (iconCards.length < 2) {
+			onSetIconCards([...iconCards, cardId]);
+			return;
+		}
+		onSetIconCards([iconCards[1], cardId]);
+	};
+
 	return (
 		<>
 			<DialogRoot open={open} onOpenChange={onOpenChange}>
@@ -48,12 +61,10 @@ const DeckDetailModal = ({
 							<DialogCloseTrigger />
 							<div className="flex justify-between items-center mb-4">
 								<DialogTitle>Deck Details</DialogTitle>
-								<div className="flex gap-2">
-									{!readOnly && onSetIconCards && (
-										<Button onClick={() => setShowIconModal(true)}>
-											Set Icon
-										</Button>
-									)}
+								<div className="text-xs text-[#aaa]">
+									{!readOnly && onSetIconCards
+										? `Icon: ${iconCards.length}/2`
+										: ""}
 								</div>
 							</div>
 							<div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4">
@@ -65,14 +76,14 @@ const DeckDetailModal = ({
 										<button
 											type="button"
 											onClick={() => setPreviewCard(card)}
-											className="w-[50px] h-[50px] cursor-pointer relative shrink-0"
+											className="relative h-[50px] w-[50px] shrink-0 cursor-pointer overflow-hidden rounded"
 										>
 											<Image
 												src={card.image}
 												alt={card.name}
-												width={50}
-												height={50}
-												className="object-contain"
+												fill
+												sizes="50px"
+												className="object-cover object-top"
 											/>
 										</button>
 										<div className="flex-1 min-w-0 text-left">
@@ -84,7 +95,19 @@ const DeckDetailModal = ({
 										{readOnly ? (
 											<span className="font-bold text-lg">x{card.count}</span>
 										) : (
-											<div className="flex items-center gap-1.5">
+											<div className="flex items-center gap-2">
+												{onSetIconCards && (
+													<Button
+														onClick={(e) => {
+															e.stopPropagation();
+															toggleIconCard(card.id);
+														}}
+														selected={iconCards.includes(card.id)}
+														className="h-8 min-w-[64px] px-2 text-xs"
+													>
+														Icon
+													</Button>
+												)}
 												<Button
 													onClick={() => onRemove(card.id)}
 													className="w-8! h-8! p-0!"
@@ -118,89 +141,7 @@ const DeckDetailModal = ({
 					}}
 				/>
 			)}
-			{showIconModal && (
-				<IconSettingModal
-					open={showIconModal}
-					onOpenChange={(details) => {
-						if (!details.open) setShowIconModal(false);
-					}}
-					deckList={deckList}
-					iconCards={iconCards}
-					onSetIconCards={onSetIconCards}
-				/>
-			)}
 		</>
-	);
-};
-
-const IconSettingModal = ({
-	open,
-	onOpenChange,
-	deckList,
-	iconCards,
-	onSetIconCards,
-}) => {
-	const [selectedIcons, setSelectedIcons] = useState([...iconCards]);
-	const handleCardClick = (cardId) => {
-		if (selectedIcons.includes(cardId))
-			setSelectedIcons((prev) => prev.filter((id) => id !== cardId));
-		else if (selectedIcons.length < 2)
-			setSelectedIcons((prev) => [...prev, cardId]);
-		else setSelectedIcons((prev) => [prev[1], cardId]);
-	};
-
-	return (
-		<DialogRoot open={open} onOpenChange={onOpenChange}>
-			<Portal>
-				<DialogBackdrop />
-				<DialogPositioner className="fixed inset-0 z-1200 flex items-center justify-center p-8">
-					<DialogContent className="w-full max-w-[800px] max-h-[90vh] overflow-y-auto">
-						<DialogCloseTrigger />
-						<div className="flex justify-between items-center mb-4">
-							<DialogTitle>
-								Set Deck Icons ({selectedIcons.length}/2)
-							</DialogTitle>
-							<div className="flex gap-2">
-								<Button
-									onClick={() => {
-										onSetIconCards(selectedIcons);
-										onOpenChange({ open: false });
-									}}
-								>
-									Save
-								</Button>
-							</div>
-						</div>
-						<div className="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
-							{deckList.map((card) => (
-								<button
-									type="button"
-									key={card.id}
-									onClick={() => handleCardClick(card.id)}
-									className="cursor-pointer text-center"
-								>
-									<div
-										className={`w-[100px] h-[100px] rounded-full mx-auto relative ${
-											selectedIcons.includes(card.id)
-												? "ring-[3px] ring-[#646cff]"
-												: "ring-[3px] ring-transparent"
-										}`}
-									>
-										<Image
-											src={card.image}
-											alt={card.name}
-											width={100}
-											height={100}
-											className="rounded-full object-cover object-top scale-150"
-										/>
-									</div>
-								</button>
-							))}
-						</div>
-					</DialogContent>
-				</DialogPositioner>
-			</Portal>
-		</DialogRoot>
 	);
 };
 
