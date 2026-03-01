@@ -1,4 +1,10 @@
 import { useEffect, useState } from "react";
+import {
+	createToaster,
+	Toaster,
+	ToastRoot,
+	ToastTitle,
+} from "@/components/ui/toast/toast";
 import { generateId } from "@/legacy/utils/idGenerator";
 import {
 	copyDeckInStorage,
@@ -16,6 +22,11 @@ import UserSelectionScreen from "./user-selection-screen";
 
 const APP_BG =
 	"radial-gradient(120% 100% at 50% 15%, #113b5e 0%, #04192d 55%, #020b16 100%)";
+const toaster = createToaster({
+	placement: "bottom",
+	duration: 2000,
+	max: 1,
+});
 
 function App() {
 	const [view, setView] = useState("lobby");
@@ -26,10 +37,29 @@ function App() {
 	const [currentUser, setCurrentUser] = useState(null);
 	const [cardData, setCardData] = useState([]);
 	const [isLoadingCards, setIsLoadingCards] = useState(true);
+	const showToast = (title, type = "default") => {
+		toaster.create({
+			title,
+			type,
+			duration: type === "error" ? 4000 : 2000,
+		});
+	};
 
 	useEffect(() => {
-		getDecks().then(setDecks);
-		getUsers().then(setUsers);
+		const loadInitialData = async () => {
+			try {
+				const [loadedDecks, loadedUsers] = await Promise.all([
+					getDecks(),
+					getUsers(),
+				]);
+				setDecks(loadedDecks);
+				setUsers(loadedUsers);
+			} catch {
+				setDecks([]);
+				setUsers([]);
+			}
+		};
+		loadInitialData();
 	}, []);
 
 	useEffect(() => {
@@ -55,7 +85,7 @@ function App() {
 	const handleCreateNew = () => {
 		const userDecks = decks.filter((d) => d.ownerId === currentUser?.id);
 		if (userDecks.length >= 999) {
-			alert("デッキ数が上限(999)です。");
+			showToast("デッキ数が上限(999)です。", "error");
 			return;
 		}
 		setCurrentDeckId(null);
@@ -74,7 +104,7 @@ function App() {
 			deckData.id = generateId();
 			const userDecks = decks.filter((d) => d.ownerId === currentUser?.id);
 			if (userDecks.length >= 999) {
-				alert("デッキ数が上限(999)です。");
+				showToast("デッキ数が上限(999)です。", "error");
 				return;
 			}
 		}
@@ -84,14 +114,6 @@ function App() {
 
 		const newDecks = await saveDeckToStorage(deckData);
 		setDecks(newDecks);
-
-		if (deckData.wasRenamed) {
-			alert(
-				`Deck saved!\n${deckData.name}\n既に同名のデッキがあるため、自動で番号を付与しました。`,
-			);
-		} else {
-			alert(`Deck saved!\n${deckData.name}`);
-		}
 
 		if (currentDeckId !== deckData.id) {
 			setCurrentDeckId(deckData.id);
@@ -111,14 +133,14 @@ function App() {
 			if (sourceDeck) {
 				const userDecks = decks.filter((d) => d.ownerId === sourceDeck.ownerId);
 				if (userDecks.length >= 999) {
-					alert("デッキ数が上限(999)です。");
+					showToast("デッキ数が上限(999)です。", "error");
 					return;
 				}
 			}
 			const newDecks = await copyDeckInStorage(id);
 			setDecks(newDecks);
 		} catch (e) {
-			alert(e.message);
+			showToast(e.message || "コピーに失敗しました。", "error");
 		}
 	};
 
@@ -140,9 +162,9 @@ function App() {
 				return;
 			const newDecks = await exportDeckToPublic(id);
 			setDecks(newDecks);
-			alert("Publicにエクスポートしました。");
+			showToast("Publicにエクスポートしました。", "success");
 		} catch (e) {
-			alert(e.message);
+			showToast(e.message || "エクスポートに失敗しました。", "error");
 		}
 	};
 
@@ -150,7 +172,7 @@ function App() {
 		try {
 			const userDecks = decks.filter((d) => d.ownerId === currentUser?.id);
 			if (userDecks.length >= 999) {
-				alert("デッキ数が上限(999)です。");
+				showToast("デッキ数が上限(999)です。", "error");
 				return;
 			}
 			const deckToImport = decks.find((d) => d.id === id);
@@ -159,9 +181,9 @@ function App() {
 				return;
 			const newDecks = await importDeckFromPublic(id, currentUser.id);
 			setDecks(newDecks);
-			alert("Publicからインポートしました。");
+			showToast("Publicからインポートしました。", "success");
 		} catch (e) {
-			alert(e.message);
+			showToast(e.message || "インポートに失敗しました。", "error");
 		}
 	};
 
@@ -242,7 +264,17 @@ function App() {
 		);
 	};
 
-	return <div className="feature-root">{renderContent()}</div>;
+	return (
+		<div className="feature-root">
+			{renderContent()}
+			<Toaster toaster={toaster}>
+				{(toast) => (
+					<ToastRoot key={toast.id} toastType={toast.type}>
+						<ToastTitle toastType={toast.type}>{toast.title}</ToastTitle>
+					</ToastRoot>
+				)}
+			</Toaster>
+		</div>
+	);
 }
-
 export default App;
