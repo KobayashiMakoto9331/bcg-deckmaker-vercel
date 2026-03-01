@@ -4,6 +4,8 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ADMIN_KEY =
 	process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
 const SUPABASE_CARDS_BUCKET = process.env.SUPABASE_CARDS_BUCKET ?? "gcg-data";
+const SUPABASE_CARD_IMAGES_BUCKET =
+	process.env.SUPABASE_CARD_IMAGES_BUCKET ?? SUPABASE_CARDS_BUCKET;
 
 export type AppUserRow = {
 	id: string;
@@ -42,6 +44,10 @@ export function getSupabaseAdmin() {
 
 export function getSupabaseCardsBucket() {
 	return SUPABASE_CARDS_BUCKET;
+}
+
+export function getSupabaseCardImagesBucket() {
+	return SUPABASE_CARD_IMAGES_BUCKET;
 }
 
 export function getDisplayLength(str: string) {

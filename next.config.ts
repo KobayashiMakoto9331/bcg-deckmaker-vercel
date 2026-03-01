@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
 				protocol: "https",
 				hostname: "www.gundam-gcg.com",
 			},
+			{
+				protocol: "https",
+				hostname: "**.supabase.co",
+			},
 		],
 	},
 };

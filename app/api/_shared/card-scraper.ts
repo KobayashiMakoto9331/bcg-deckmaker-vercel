@@ -115,7 +115,7 @@ export async function scrapeCards() {
 	return { idsCount: ids.length, cards };
 }
 
-function inferMimeType(url: string, contentType?: string) {
+export function inferMimeType(url: string, contentType?: string) {
 	if (contentType?.startsWith("image/")) return contentType;
 	const lower = url.toLowerCase();
 	if (lower.endsWith(".png")) return "image/png";
